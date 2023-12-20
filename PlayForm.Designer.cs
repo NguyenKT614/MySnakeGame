@@ -29,10 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SnakeGame));
             this.startButton = new System.Windows.Forms.Button();
             this.snapButton = new System.Windows.Forms.Button();
-            this.picCanvas = new System.Windows.Forms.PictureBox();
             this.txtScore = new System.Windows.Forms.Label();
             this.txtHighScore = new System.Windows.Forms.Label();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
@@ -41,8 +39,9 @@
             this.hardRadioButton = new System.Windows.Forms.RadioButton();
             this.mediumRadioButton = new System.Windows.Forms.RadioButton();
             this.easyRadioButton = new System.Windows.Forms.RadioButton();
-            ((System.ComponentModel.ISupportInitialize)(this.picCanvas)).BeginInit();
+            this.picCanvas = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCanvas)).BeginInit();
             this.SuspendLayout();
             // 
             // startButton
@@ -68,17 +67,6 @@
             this.snapButton.Text = "Snap";
             this.snapButton.UseVisualStyleBackColor = false;
             this.snapButton.Click += new System.EventHandler(this.TakeSnapShot);
-            // 
-            // picCanvas
-            // 
-            this.picCanvas.BackColor = System.Drawing.Color.SlateBlue;
-            this.picCanvas.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picCanvas.BackgroundImage")));
-            this.picCanvas.Location = new System.Drawing.Point(12, 12);
-            this.picCanvas.Name = "picCanvas";
-            this.picCanvas.Size = new System.Drawing.Size(604, 514);
-            this.picCanvas.TabIndex = 1;
-            this.picCanvas.TabStop = false;
-            this.picCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.UpdatePictureBoxGraphics);
             // 
             // txtScore
             // 
@@ -167,6 +155,17 @@
             this.easyRadioButton.UseVisualStyleBackColor = false;
             this.easyRadioButton.CheckedChanged += new System.EventHandler(this.easyRadioButton_CheckedChanged);
             // 
+            // picCanvas
+            // 
+            this.picCanvas.BackColor = System.Drawing.Color.SlateBlue;
+            this.picCanvas.BackgroundImage = global::SnakeGame.Properties.Resources.fbd00f173ca22bc24d75664ec469e497;
+            this.picCanvas.Location = new System.Drawing.Point(12, 12);
+            this.picCanvas.Name = "picCanvas";
+            this.picCanvas.Size = new System.Drawing.Size(604, 514);
+            this.picCanvas.TabIndex = 1;
+            this.picCanvas.TabStop = false;
+            this.picCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.UpdatePictureBoxGraphics);
+            // 
             // SnakeGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -187,8 +186,8 @@
             this.Text = "Snake Game";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyIsUp);
-            ((System.ComponentModel.ISupportInitialize)(this.picCanvas)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCanvas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

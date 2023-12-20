@@ -93,6 +93,16 @@ namespace SnakeGame.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fbd00f173ca22bc24d75664ec469e497 {
+            get {
+                object obj = ResourceManager.GetObject("fbd00f173ca22bc24d75664ec469e497", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap therock_removebg_preview {
             get {
                 object obj = ResourceManager.GetObject("therock_removebg_preview", resourceCulture);
