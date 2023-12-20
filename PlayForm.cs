@@ -14,7 +14,7 @@ namespace SnakeGame
     {
 
         // Liên kết database
-        private string connStr = @"Data Source=DESKTOP-R570AKJ;Initial Catalog=LTTQ_Project;Integrated Security=True;Encrypt=False";
+        private string connStr = @"Data Source=DESKTOP-B7G8SLV;Initial Catalog=LTTQ_Project;Integrated Security=True;Encrypt=False";
 
         // Lưu danh sách người chơi
         private Dictionary<string, int> player_list = new Dictionary<string, int>();
@@ -70,7 +70,7 @@ namespace SnakeGame
             this.pID = pID;
             this.pName = pName;
         }
-        
+
         // Hàm khởi tạo vật cản
         private void InitializeObstacles()
         {
@@ -208,11 +208,6 @@ namespace SnakeGame
         // Bộ đếm thời gian
         private void GameTimerEvent(object sender, EventArgs e)
         {
-            // Adjust snake speed
-            // The lower the faster
-            gameTimer.Interval = 65;
-
-
             // Setting the directions
             if (goLeft)
             {
@@ -400,6 +395,9 @@ namespace SnakeGame
             // khi đó thì không dùng các phim trên bàn phím dc nên phải tắt
             startButton.Enabled = false;
             snapButton.Enabled = false;
+            easyRadioButton.Enabled = false;
+            mediumRadioButton.Enabled = false;
+            hardRadioButton.Enabled = false;
 
             score = 0;
             txtScore.Text = "Score: " + score;
@@ -456,6 +454,21 @@ namespace SnakeGame
             lastFoodTime = DateTime.Now;
         }
 
+        private void easyRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            gameTimer.Interval = 100;
+        }
+
+        private void mediumRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            gameTimer.Interval = 50;
+        }
+
+        private void hardRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            gameTimer.Interval = 25;
+        }
+
         // Kiểm tra xem food có nằm TRÙNG vị trí của body hay không
         bool FoodOnBody()
         {
@@ -488,6 +501,9 @@ namespace SnakeGame
             // Cho phép nút Start và Chụp
             startButton.Enabled = true;
             snapButton.Enabled = true;
+            easyRadioButton.Enabled = true;
+            mediumRadioButton.Enabled = true;
+            hardRadioButton.Enabled = true;
 
             if (score > highscore)
             {

@@ -30,9 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
             this.PlayButton = new System.Windows.Forms.Button();
-            this.OptionButton = new System.Windows.Forms.Button();
             this.QuitButton = new System.Windows.Forms.Button();
             this.SnakeLabel = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // PlayButton
@@ -43,31 +44,19 @@
             this.PlayButton.BackColor = System.Drawing.Color.DimGray;
             this.PlayButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.PlayButton.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.PlayButton.Location = new System.Drawing.Point(320, 185);
-            this.PlayButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PlayButton.Location = new System.Drawing.Point(241, 181);
             this.PlayButton.Name = "PlayButton";
-            this.PlayButton.Size = new System.Drawing.Size(160, 37);
+            this.PlayButton.Size = new System.Drawing.Size(120, 30);
             this.PlayButton.TabIndex = 0;
             this.PlayButton.Text = "Play";
             this.PlayButton.UseVisualStyleBackColor = false;
             this.PlayButton.Click += new System.EventHandler(this.PlayButton_Click);
             // 
-            // OptionButton
-            // 
-            this.OptionButton.Location = new System.Drawing.Point(320, 258);
-            this.OptionButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.OptionButton.Name = "OptionButton";
-            this.OptionButton.Size = new System.Drawing.Size(160, 37);
-            this.OptionButton.TabIndex = 0;
-            this.OptionButton.Text = "Option";
-            this.OptionButton.UseVisualStyleBackColor = true;
-            // 
             // QuitButton
             // 
-            this.QuitButton.Location = new System.Drawing.Point(320, 332);
-            this.QuitButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.QuitButton.Location = new System.Drawing.Point(241, 217);
             this.QuitButton.Name = "QuitButton";
-            this.QuitButton.Size = new System.Drawing.Size(160, 37);
+            this.QuitButton.Size = new System.Drawing.Size(120, 30);
             this.QuitButton.TabIndex = 0;
             this.QuitButton.Text = "Quit";
             this.QuitButton.UseVisualStyleBackColor = true;
@@ -81,27 +70,41 @@
             this.SnakeLabel.BackColor = System.Drawing.Color.Transparent;
             this.SnakeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SnakeLabel.ForeColor = System.Drawing.Color.Navy;
-            this.SnakeLabel.Location = new System.Drawing.Point(293, 74);
-            this.SnakeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.SnakeLabel.Location = new System.Drawing.Point(221, 91);
             this.SnakeLabel.Name = "SnakeLabel";
-            this.SnakeLabel.Size = new System.Drawing.Size(213, 49);
+            this.SnakeLabel.Size = new System.Drawing.Size(160, 40);
             this.SnakeLabel.TabIndex = 1;
             this.SnakeLabel.Text = "SNAKE";
             this.SnakeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // panel2
+            // 
+            this.panel2.Location = new System.Drawing.Point(532, 12);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(40, 25);
+            this.panel2.TabIndex = 7;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Location = new System.Drawing.Point(486, 12);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(40, 25);
+            this.panel1.TabIndex = 6;
+            // 
             // MainMenuForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(779, 444);
+            this.ClientSize = new System.Drawing.Size(584, 361);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.SnakeLabel);
             this.Controls.Add(this.QuitButton);
-            this.Controls.Add(this.OptionButton);
             this.Controls.Add(this.PlayButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MainMenuForm";
             this.Text = "MainMenuForm";
             this.ResumeLayout(false);
@@ -111,8 +114,9 @@
         #endregion
 
         private System.Windows.Forms.Button PlayButton;
-        private System.Windows.Forms.Button OptionButton;
         private System.Windows.Forms.Button QuitButton;
         private System.Windows.Forms.Label SnakeLabel;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel1;
     }
 }
