@@ -113,8 +113,5 @@
   <ItemGroup>
     <None Include="Resources\dauran.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\fbd00f173ca22bc24d75664ec469e497.jpg" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

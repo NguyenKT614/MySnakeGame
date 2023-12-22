@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SnakeGame));
             this.startButton = new System.Windows.Forms.Button();
             this.snapButton = new System.Windows.Forms.Button();
             this.txtScore = new System.Windows.Forms.Label();
@@ -158,10 +159,11 @@
             // picCanvas
             // 
             this.picCanvas.BackColor = System.Drawing.Color.SlateBlue;
-            this.picCanvas.BackgroundImage = global::SnakeGame.Properties.Resources.fbd00f173ca22bc24d75664ec469e497;
+            this.picCanvas.Image = ((System.Drawing.Image)(resources.GetObject("picCanvas.Image")));
             this.picCanvas.Location = new System.Drawing.Point(12, 12);
             this.picCanvas.Name = "picCanvas";
             this.picCanvas.Size = new System.Drawing.Size(604, 514);
+            this.picCanvas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picCanvas.TabIndex = 1;
             this.picCanvas.TabStop = false;
             this.picCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.UpdatePictureBoxGraphics);

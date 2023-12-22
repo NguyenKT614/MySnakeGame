@@ -130,7 +130,4 @@
   <data name="duoiran" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\duoiran.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="fbd00f173ca22bc24d75664ec469e497" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fbd00f173ca22bc24d75664ec469e4971.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>
