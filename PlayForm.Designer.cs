@@ -49,9 +49,10 @@
             // 
             this.startButton.BackColor = System.Drawing.Color.Salmon;
             this.startButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.startButton.Location = new System.Drawing.Point(751, 12);
+            this.startButton.Location = new System.Drawing.Point(1001, 15);
+            this.startButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(126, 118);
+            this.startButton.Size = new System.Drawing.Size(168, 145);
             this.startButton.TabIndex = 0;
             this.startButton.Text = "Start";
             this.startButton.UseVisualStyleBackColor = false;
@@ -61,9 +62,10 @@
             // 
             this.snapButton.BackColor = System.Drawing.Color.Salmon;
             this.snapButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.snapButton.Location = new System.Drawing.Point(883, 12);
+            this.snapButton.Location = new System.Drawing.Point(1177, 15);
+            this.snapButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.snapButton.Name = "snapButton";
-            this.snapButton.Size = new System.Drawing.Size(126, 118);
+            this.snapButton.Size = new System.Drawing.Size(168, 145);
             this.snapButton.TabIndex = 0;
             this.snapButton.Text = "Snap";
             this.snapButton.UseVisualStyleBackColor = false;
@@ -73,9 +75,10 @@
             // 
             this.txtScore.AutoSize = true;
             this.txtScore.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.txtScore.Location = new System.Drawing.Point(622, 137);
+            this.txtScore.Location = new System.Drawing.Point(829, 169);
+            this.txtScore.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.txtScore.Name = "txtScore";
-            this.txtScore.Size = new System.Drawing.Size(47, 13);
+            this.txtScore.Size = new System.Drawing.Size(56, 16);
             this.txtScore.TabIndex = 2;
             this.txtScore.Text = "Score: 0";
             // 
@@ -83,24 +86,25 @@
             // 
             this.txtHighScore.AutoSize = true;
             this.txtHighScore.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.txtHighScore.Location = new System.Drawing.Point(622, 159);
+            this.txtHighScore.Location = new System.Drawing.Point(829, 196);
+            this.txtHighScore.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.txtHighScore.Name = "txtHighScore";
-            this.txtHighScore.Size = new System.Drawing.Size(60, 13);
+            this.txtHighScore.Size = new System.Drawing.Size(74, 16);
             this.txtHighScore.TabIndex = 2;
             this.txtHighScore.Text = "High Score";
             // 
             // gameTimer
             // 
-            this.gameTimer.Interval = 40;
             this.gameTimer.Tick += new System.EventHandler(this.GameTimerEvent);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label1.Location = new System.Drawing.Point(632, 498);
+            this.label1.Location = new System.Drawing.Point(843, 613);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 13);
+            this.label1.Size = new System.Drawing.Size(115, 16);
             this.label1.TabIndex = 3;
             this.label1.Text = "Press \'P\' to pause";
             // 
@@ -109,19 +113,21 @@
             this.dataGridView1.BackgroundColor = System.Drawing.Color.DarkSalmon;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Enabled = false;
-            this.dataGridView1.Location = new System.Drawing.Point(625, 192);
+            this.dataGridView1.Location = new System.Drawing.Point(833, 236);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.Size = new System.Drawing.Size(470, 283);
+            this.dataGridView1.Size = new System.Drawing.Size(627, 348);
             this.dataGridView1.TabIndex = 4;
             // 
             // hardRadioButton
             // 
             this.hardRadioButton.Appearance = System.Windows.Forms.Appearance.Button;
             this.hardRadioButton.BackColor = System.Drawing.Color.Transparent;
-            this.hardRadioButton.Location = new System.Drawing.Point(625, 101);
+            this.hardRadioButton.Location = new System.Drawing.Point(833, 124);
+            this.hardRadioButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.hardRadioButton.Name = "hardRadioButton";
-            this.hardRadioButton.Size = new System.Drawing.Size(120, 29);
+            this.hardRadioButton.Size = new System.Drawing.Size(160, 36);
             this.hardRadioButton.TabIndex = 14;
             this.hardRadioButton.Text = "Hard";
             this.hardRadioButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -132,9 +138,10 @@
             // 
             this.mediumRadioButton.Appearance = System.Windows.Forms.Appearance.Button;
             this.mediumRadioButton.BackColor = System.Drawing.Color.Transparent;
-            this.mediumRadioButton.Location = new System.Drawing.Point(625, 56);
+            this.mediumRadioButton.Location = new System.Drawing.Point(833, 69);
+            this.mediumRadioButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mediumRadioButton.Name = "mediumRadioButton";
-            this.mediumRadioButton.Size = new System.Drawing.Size(120, 29);
+            this.mediumRadioButton.Size = new System.Drawing.Size(160, 36);
             this.mediumRadioButton.TabIndex = 15;
             this.mediumRadioButton.Text = "Medium";
             this.mediumRadioButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -146,9 +153,10 @@
             this.easyRadioButton.Appearance = System.Windows.Forms.Appearance.Button;
             this.easyRadioButton.BackColor = System.Drawing.Color.Transparent;
             this.easyRadioButton.Checked = true;
-            this.easyRadioButton.Location = new System.Drawing.Point(625, 12);
+            this.easyRadioButton.Location = new System.Drawing.Point(833, 15);
+            this.easyRadioButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.easyRadioButton.Name = "easyRadioButton";
-            this.easyRadioButton.Size = new System.Drawing.Size(120, 29);
+            this.easyRadioButton.Size = new System.Drawing.Size(160, 36);
             this.easyRadioButton.TabIndex = 16;
             this.easyRadioButton.TabStop = true;
             this.easyRadioButton.Text = "Easy";
@@ -160,9 +168,10 @@
             // 
             this.picCanvas.BackColor = System.Drawing.Color.SlateBlue;
             this.picCanvas.Image = ((System.Drawing.Image)(resources.GetObject("picCanvas.Image")));
-            this.picCanvas.Location = new System.Drawing.Point(12, 12);
+            this.picCanvas.Location = new System.Drawing.Point(16, 15);
+            this.picCanvas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.picCanvas.Name = "picCanvas";
-            this.picCanvas.Size = new System.Drawing.Size(604, 514);
+            this.picCanvas.Size = new System.Drawing.Size(805, 633);
             this.picCanvas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picCanvas.TabIndex = 1;
             this.picCanvas.TabStop = false;
@@ -170,10 +179,10 @@
             // 
             // SnakeGame
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateBlue;
-            this.ClientSize = new System.Drawing.Size(1114, 538);
+            this.ClientSize = new System.Drawing.Size(1485, 662);
             this.Controls.Add(this.hardRadioButton);
             this.Controls.Add(this.mediumRadioButton);
             this.Controls.Add(this.easyRadioButton);
@@ -184,6 +193,7 @@
             this.Controls.Add(this.picCanvas);
             this.Controls.Add(this.snapButton);
             this.Controls.Add(this.startButton);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "SnakeGame";
             this.Text = "Snake Game";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
