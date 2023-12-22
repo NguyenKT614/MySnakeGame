@@ -12,6 +12,10 @@ namespace SnakeGame
 {
     public partial class MainMenuForm : Form
     {
+        public static class MainMenuVar
+        {
+            public static bool first_timemenu = true;
+        }
         public MainMenuForm()
         {
             InitializeComponent();
@@ -36,17 +40,25 @@ namespace SnakeGame
             panel2.Controls.Add(soundCheckBox);
 
         }
-        private DataForm dataForm;
+        private static DataForm dataForm;
         // Bắt đầu chơi 
         private void PlayButton_Click(object sender, EventArgs e)
         {
             // Ẩn MainMenu form khi ấn Play
             this.Hide();
 
+            MainMenuVar.first_timemenu = false;
+
             dataForm = new DataForm();
             dataForm.Show();
         }
-
+        public void DelInstance()
+        {
+            if (dataForm != null)
+            {
+                dataForm = null;
+            }
+        }
         // Tắt game
         private void QuitButton_Click(object sender, EventArgs e)
         {

@@ -7,12 +7,16 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Remoting.Contexts;
 using System.Windows.Forms;
+using static SnakeGame.MainMenuForm;
 
 namespace SnakeGame
 {
     public partial class SnakeGame : Form
     {
-
+        public static class PlayFormVar
+        {
+            public static int first_timeplay = 0;
+        }
         // Liên kết database
         private string connStr = @"Data Source=DESKTOP-R570AKJ;Initial Catalog=LTTQ_Project;Integrated Security=True;Encrypt=False";
 
@@ -182,6 +186,10 @@ namespace SnakeGame
         // Bắt đầu = Restart
         private void StartGame(object sender, EventArgs e)
         {
+            if (MainMenuVar.first_timemenu == false && PlayFormVar.first_timeplay == 1)
+            {
+                GameOverEvent?.Invoke();
+            }
             RestartGame();
         }
 
@@ -411,6 +419,7 @@ namespace SnakeGame
             easyRadioButton.Enabled = false;
             mediumRadioButton.Enabled = false;
             hardRadioButton.Enabled = false;
+            exitButton.Enabled = false;
 
             score = 0;
             txtScore.Text = "Score: " + score;
@@ -482,6 +491,11 @@ namespace SnakeGame
             gameTimer.Interval = 50;
         }
 
+        private void ExitGame(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
         // Kiểm tra xem food có nằm TRÙNG vị trí của body hay không
         bool FoodOnBody()
         {
@@ -518,6 +532,7 @@ namespace SnakeGame
             easyRadioButton.Enabled = true;
             mediumRadioButton.Enabled = true;
             hardRadioButton.Enabled = true;
+            exitButton.Enabled = true;
 
             if (score > highscore)
             {
@@ -572,10 +587,10 @@ namespace SnakeGame
 
                 connection.Close();
             }
-            
-            // Gọi sự kiện khi trò chơi kết thúc
-            GameOverEvent?.Invoke();
-            this.Hide();
+
+            // Load lại dữ liệu vào bảng
+            LoadData();
+            PlayFormVar.first_timeplay = 1;
         }
 
     }
