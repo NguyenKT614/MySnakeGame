@@ -19,6 +19,8 @@ namespace SnakeGame
         public DataForm()
         {
             InitializeComponent();
+            PlayerIDtxt.BackColor = Color.Transparent;
+            PlayerNametxt.BackColor = Color.Transparent;
         }
 
         private void OKbutton_Click(object sender, EventArgs e)
@@ -32,7 +34,7 @@ namespace SnakeGame
                 pID = PlayerID.Text;
                 pName = PlayerName.Text;
                 // Tạo một instance mới của form chơi game
-                snakeGameForm = new SnakeGame(pID,pName);
+                snakeGameForm = new SnakeGame(pID, pName);
 
                 // Gắn sự kiện để hiển thị lại MainMenu form khi trò chơi kết thúc
                 snakeGameForm.GameOverEvent += SnakeGameForm_GameOverEvent;
@@ -43,6 +45,12 @@ namespace SnakeGame
                 this.Hide();
             }
         }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
         // Sự kiện xảy ra khi trò chơi kết thúc
         private void SnakeGameForm_GameOverEvent()
         {

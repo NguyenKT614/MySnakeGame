@@ -14,11 +14,7 @@ namespace SnakeGame
     {
 
         // Liên kết database
-        private string connStr = @"Data Source=DESKTOP-B7G8SLV;Initial Catalog=LTTQ_Project;Integrated Security=True;Encrypt=False";
-
-        // Lưu danh sách người chơi
-        private Dictionary<string, int> player_list = new Dictionary<string, int>();
-
+        private string connStr = @"Data Source=DESKTOP-R570AKJ;Initial Catalog=LTTQ_Project;Integrated Security=True;Encrypt=False";
 
         // Variable for Database
         DateTime pTime;
@@ -33,17 +29,19 @@ namespace SnakeGame
         // Danh sách vật cản
         List<Obstacle> obstacles = new List<Obstacle>();
 
-        // Các biến
+        // Các biến dùng cho mục đích setting chiều cao, chiều rộng của 1 đối tượng
         int maxWidth;
         int maxHeight;
 
-        // Điểm số 
+        // Điểm số của người chơi
         int score;
         int highscore;
 
-        // Thời gian để tạo lại thức ăn
-        // phòng trường hợp thức ăn ở vị trí mà các vật cản tạo thành chữ U
-        // sẽ khiến người chơi không ăn được nên ta phải tạo lại
+        /* 
+         * Thời gian để tạo lại thức ăn
+         * phòng trường hợp thức ăn ở vị trí mà các vật cản tạo thành chữ U
+         * sẽ khiến người chơi không ăn được nên ta phải tạo lại
+        */
         DateTime lastFoodTime;
         int foodTimeoutSeconds = 10;
 
@@ -54,14 +52,20 @@ namespace SnakeGame
 
         Random rand = new Random();
 
+        // biến định hướng di chuyển
         bool goLeft, goRight, goDown, goUp;
 
+        // hàm khởi tạo khi instance được gọi
         public SnakeGame()
         {
             InitializeComponent();
             new Settings();
             LoadData();
         }
+
+        /*
+         * Hàm khởi tạo để lấy dữ liệu là thông tin của người chơi từ DataForm
+         */
         public SnakeGame(string pID, string pName)
         {
             InitializeComponent();
@@ -87,8 +91,10 @@ namespace SnakeGame
             }
         }
 
-        // Xem vật cản có gần vị trí bắt đầu lúc start game không
-        // (vì nếu gần quá sẽ dẫn đến thua ngay khi vừa vào game)
+        /* 
+         * Xem vật cản có gần vị trí bắt đầu lúc start game không
+         * (vì nếu gần quá sẽ dẫn đến thua ngay khi vừa vào game)
+         */
         private bool IsObstacleTooCloseToSnake(Obstacle obstacle)
         {
             var SnakeHead = Snake[0];
@@ -131,9 +137,13 @@ namespace SnakeGame
             }
         }
 
-        // Khi nhấn 1 nút
+        // Khi nhấn 1 nút (nút di chuyển hoặc nút pause)
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
+            /* Nếu nhấn nút sang trái và hướng hiện tại không phải là di chuyển phải 
+             * (không để cho đối tượng thực hiện quay đầu bằng các cắn vào bản thân)
+             * nếu thỏa mãn thì sẽ đối tượng sang trái
+             */
             if (e.KeyCode == Keys.Left && Settings.directions != "right")
                 goLeft = true;
             if (e.KeyCode == Keys.Right && Settings.directions != "left")
@@ -143,6 +153,7 @@ namespace SnakeGame
             if (e.KeyCode == Keys.Down && Settings.directions != "up")
                 goDown = true;
 
+            // Nếu nhấn P (pause), ta sẽ kiểm tra biến count
             if (e.KeyCode == Keys.P && count % 2 == 0)
             {
                 gameTimer.Stop();
@@ -205,7 +216,7 @@ namespace SnakeGame
 
         }
 
-        // Bộ đếm thời gian
+        // Bộ đếm thời gian 
         private void GameTimerEvent(object sender, EventArgs e)
         {
             // Setting the directions
@@ -325,7 +336,7 @@ namespace SnakeGame
             picCanvas.Invalidate();
         }
 
-
+        // Hiển thị hình ảnh của rắn
         private void UpdatePictureBoxGraphics(object sender, PaintEventArgs e)
         {
             Graphics canvas = e.Graphics;
@@ -384,6 +395,8 @@ namespace SnakeGame
         // Hàm bắt đầu lại trò chơi
         private void RestartGame()
         {
+            // Lấy dữ liệu thời gian chơi
+            pTime = DateTime.Now;
 
             maxWidth = picCanvas.Width / Settings.Width - 1;
             maxHeight = picCanvas.Height / Settings.Height - 1;
@@ -398,6 +411,7 @@ namespace SnakeGame
             easyRadioButton.Enabled = false;
             mediumRadioButton.Enabled = false;
             hardRadioButton.Enabled = false;
+            exitButton.Enabled = false;
 
             score = 0;
             txtScore.Text = "Score: " + score;
@@ -461,12 +475,17 @@ namespace SnakeGame
 
         private void mediumRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            gameTimer.Interval = 50;
+            gameTimer.Interval = 75;
         }
 
         private void hardRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            gameTimer.Interval = 25;
+            gameTimer.Interval = 50;
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
         // Kiểm tra xem food có nằm TRÙNG vị trí của body hay không
@@ -480,6 +499,7 @@ namespace SnakeGame
             return false;
         }
 
+        // Kiểm tra xem food có đang ở trên vật cản hay không, nếu có thì không thể được
         bool FoodOnObstacle()
         {
             for (int i = 0; i < 20; i++)
@@ -504,56 +524,60 @@ namespace SnakeGame
             easyRadioButton.Enabled = true;
             mediumRadioButton.Enabled = true;
             hardRadioButton.Enabled = true;
+            exitButton.Enabled = true;
 
             if (score > highscore)
             {
                 highscore = score;
-                txtHighScore.Text = "Hight Score: " + Environment.NewLine + highscore;
+                txtHighScore.Text = "Highest Score of Game: " + Environment.NewLine + highscore;
                 txtHighScore.TextAlign = ContentAlignment.MiddleCenter;
             }
 
             // Thêm dữ liệu người chơi vào trong CSDL
-            // Nếu đã tồn tại thì cập nhập lại điểm và thời gian chơi
-            if (player_list.ContainsKey(pName))
+            string query = @"
+                            if (exists(select 1 from player where id = @id_value))
+                                begin
+                                    declare @HIGHER_score int,
+                                            @PRE_score int,
+                                            @PRESENT_score int
+                                    set @PRESENT_score = @present_score_value
+                                    
+                                    select @PRE_score = score
+                                    from player
+                                    where id = @id_value
+
+                                    if (@PRE_score > @PRESENT_score)
+                                    begin 
+                                        set @HIGHER_score = @PRE_score
+                                    end
+                                    else
+                                    begin
+                                        set @HIGHER_score = @PRESENT_score
+                                    end
+
+                                    update player
+                                    set score = @HIGHER_score, time_played = @time_value
+                                    where id = @id_value
+                                end
+                             else
+                                begin
+                                    insert into player(id,player_name,score,time_played) values (@id_value,@name_value,@present_score_value,@time_value)
+                                end
+                            ";
+
+            using (SqlConnection connection = new SqlConnection(connStr))
             {
-                string query = "UPDATE Player SET Score = @v1, time_played = @v2 WHERE player_name = @v3";
-                using (SqlConnection connection = new SqlConnection(connStr))
-                {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(query, connection);
-                    int prescore = player_list[pName];
-                    player_list[pName] = prescore;
-                    int higher = prescore < score ? score : prescore;
-                    command.Parameters.AddWithValue("@v1", higher);
-                    pTime = DateTime.Now;
-                    command.Parameters.AddWithValue("@v2", pTime.ToString());
-                    command.Parameters.AddWithValue("@v3", pName);
+                connection.Open();
+                SqlCommand command = new SqlCommand(query, connection);
 
-                    command.ExecuteNonQuery();
+                command.Parameters.AddWithValue("@id_value", pID);
+                command.Parameters.AddWithValue("@name_value", pName);
+                command.Parameters.AddWithValue("@present_score_value", score);
+                command.Parameters.AddWithValue("@time_value", pTime.ToString());
 
-                    connection.Close();
-                }
-            }
-            else
-            {
-                // Nếu chưa tồn tại thông tin người chơi trong CSDL thì cập nhật thông tin người chơi
-                player_list.Add(pName, score);
-                string query = "INSERT INTO Player (id,player_name,score,time_played) VALUES (@v1,@v2,@v3,@v4)";
-                using (SqlConnection connection = new SqlConnection(connStr))
-                {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(query, connection);
+                command.ExecuteNonQuery();
 
-                    command.Parameters.AddWithValue("@v1", pID);
-                    command.Parameters.AddWithValue("@v2", pName);
-                    command.Parameters.AddWithValue("@v3", score);
-                    pTime = DateTime.Now;
-                    command.Parameters.AddWithValue("@v4", pTime.ToString());
-
-                    command.ExecuteNonQuery();
-
-                    connection.Close();
-                }
+                connection.Close();
             }
 
             // Gọi sự kiện khi trò chơi kết thúc

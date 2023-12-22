@@ -113,5 +113,17 @@
   <ItemGroup>
     <None Include="Resources\dauran.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\grass.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wood2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wood2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pixel_art_grass_image.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
