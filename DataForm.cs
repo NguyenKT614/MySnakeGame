@@ -13,7 +13,6 @@ namespace SnakeGame
 {
     public partial class DataForm : Form
     {
-        DataForm dataForm;
         private MainMenuForm menuForm = new MainMenuForm();
         private SnakeGame snakeGameForm;
         string pID, pName;
@@ -35,7 +34,7 @@ namespace SnakeGame
                 pID = PlayerID.Text;
                 pName = PlayerName.Text;
                 // Tạo một instance mới của form chơi game
-                snakeGameForm = new SnakeGame(pID,pName);
+                snakeGameForm = new SnakeGame(pID, pName);
 
                 // Gắn sự kiện để hiển thị lại MainMenu form khi trò chơi kết thúc
                 snakeGameForm.GameOverEvent += SnakeGameForm_GameOverEvent;
@@ -47,7 +46,7 @@ namespace SnakeGame
             }
         }
 
-        private void Exitbutton_Click(object sender, EventArgs e)
+        private void exitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
@@ -55,12 +54,11 @@ namespace SnakeGame
         // Sự kiện xảy ra khi trò chơi kết thúc
         private void SnakeGameForm_GameOverEvent()
         {
-            // Xóa instance của dataform trước và snakegameform trước
-            menuForm.DelInstance();
+            // Xóa instance
             snakeGameForm = null;
+
             // Hiển thị lại MainMenu form khi trò chơi kết thúc
-            dataForm = new DataForm();
-            dataForm.Show();
+            menuForm.Show();
         }
     }
 }

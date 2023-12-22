@@ -189,7 +189,7 @@
             this.exitButton.TabIndex = 0;
             this.exitButton.Text = "Exit";
             this.exitButton.UseVisualStyleBackColor = false;
-            this.exitButton.Click += new System.EventHandler(this.ExitGame);
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
             // SnakeGame
             // 
