@@ -419,7 +419,7 @@ namespace SnakeGame
             // Create random food and prevent it to spawn on the snake body
             do
                 food = new Circle { X = rand.Next(2, maxWidth), Y = rand.Next(2, maxHeight) };
-            while (FoodOnBody());
+            while (FoodOnBody() || FoodOnObstacle());
 
             // Đặt thời gian tạo food lần cuối
             lastFoodTime = DateTime.Now;
