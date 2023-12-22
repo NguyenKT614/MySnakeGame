@@ -58,6 +58,7 @@ namespace SnakeGame
             snakeGameForm = null;
 
             // Hiển thị lại MainMenu form khi trò chơi kết thúc
+            menuForm.DeleteInstance();
             menuForm.Show();
         }
     }

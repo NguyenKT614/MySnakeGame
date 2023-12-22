@@ -36,7 +36,7 @@ namespace SnakeGame
             panel2.Controls.Add(soundCheckBox);
 
         }
-        private DataForm dataForm;
+        private static DataForm dataForm;
         // Bắt đầu chơi 
         private void PlayButton_Click(object sender, EventArgs e)
         {
@@ -46,7 +46,11 @@ namespace SnakeGame
             dataForm = new DataForm();
             dataForm.Show();
         }
-
+        public void DeleteInstance()
+        {
+            if (dataForm != null) 
+                dataForm = null;
+        }
         // Tắt game
         private void QuitButton_Click(object sender, EventArgs e)
         {
