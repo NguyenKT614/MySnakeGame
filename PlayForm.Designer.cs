@@ -143,7 +143,7 @@
             this.dataButton.Name = "dataButton";
             this.dataButton.Size = new System.Drawing.Size(126, 29);
             this.dataButton.TabIndex = 0;
-            this.dataButton.Text = "Data";
+            this.dataButton.Text = "Login";
             this.dataButton.UseVisualStyleBackColor = false;
             this.dataButton.Click += new System.EventHandler(this.EnterData);
             // 

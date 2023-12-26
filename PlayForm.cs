@@ -38,6 +38,10 @@ namespace SnakeGame
         int score;
         int highscore;
 
+
+        // Số lượng vật cản random
+        int randomObstacleAmount = 20;
+
         /* 
          * Thời gian để tạo lại thức ăn
          * phòng trường hợp thức ăn ở vị trí mà các vật cản tạo thành chữ U
@@ -70,7 +74,7 @@ namespace SnakeGame
         private void InitializeRandomObstacles()
         {
             // Create random obstacles 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < randomObstacleAmount; i++)
             {
                 Obstacle newObstacle;
                 do
@@ -86,28 +90,29 @@ namespace SnakeGame
         private void InitializeOuterObstacles()
         {
             // x ngang còn y dọc
-            // Create outer obstacles 
+
+            // Tạo vật cản rìa trên
             for (int i = 0; i < 38; i++)
             {
                 Obstacle newObstacle;
                 newObstacle = new Obstacle(i, 0, 16, 16); // y = 0
                 obstacles.Add(newObstacle);
             }
-
+            // Tạo vật cản rìa dưới
             for (int i = 0; i < 38; i++)
             {
                 Obstacle newObstacle;
-                newObstacle = new Obstacle(i, 31, 16, 16); // y = 31*16
+                newObstacle = new Obstacle(i, 31, 16, 16); // y = 31
                 obstacles.Add(newObstacle);
             }
-
+            // Tạo vật cản rìa trái
             for (int i = 1; i < 31; i++)
             {
                 Obstacle newObstacle;
                 newObstacle = new Obstacle(0, i, 16, 16); // x = 0
                 obstacles.Add(newObstacle);
             }
-
+            // Tạo vật cản rìa phải
             for (int i = 1; i < 31; i++)
             {
                 Obstacle newObstacle;
@@ -208,7 +213,7 @@ namespace SnakeGame
             }
             else
             {
-                MessageBox.Show("Vui lòng nhập thông tin người chơi!?", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                MessageBox.Show("Vui lòng chọn Login để nhập thông tin người chơi!?", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             }
         }
 
@@ -456,6 +461,9 @@ namespace SnakeGame
             Circle head = new Circle { X = 10, Y = 5 };
             Snake.Add(head);
 
+            // Xóa vật cản cũ
+            obstacles.Clear();
+
             // Khởi tạo vật cản 
             if (mode1)
                 InitializeRandomObstacles();
@@ -571,6 +579,7 @@ namespace SnakeGame
         // Kiểm tra xem food có đang ở trên vật cản hay không, nếu có thì không thể được
         bool FoodOnObstacle()
         {
+            // Nếu người chơi có chọn mở mode vật cản thì mới kiểm tra
             if (mode1 || mode2)
                 for (int i = 0; i < obstacles.Count; i++)
                 {
@@ -578,6 +587,7 @@ namespace SnakeGame
                         return true;
                 }
 
+            // Nếu food ko nằm trên vật cản hoặc người chơi k chọn mode vật cản nào trì auto false
             return false;
         }
 
