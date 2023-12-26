@@ -41,7 +41,7 @@
             // 
             // PlayerID
             // 
-            this.PlayerID.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.PlayerID.BackColor = System.Drawing.SystemColors.Info;
             this.PlayerID.Location = new System.Drawing.Point(319, 94);
             this.PlayerID.Multiline = true;
             this.PlayerID.Name = "PlayerID";
@@ -50,7 +50,7 @@
             // 
             // PlayerName
             // 
-            this.PlayerName.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.PlayerName.BackColor = System.Drawing.SystemColors.Info;
             this.PlayerName.Location = new System.Drawing.Point(319, 163);
             this.PlayerName.Multiline = true;
             this.PlayerName.Name = "PlayerName";
@@ -83,8 +83,8 @@
             // 
             this.OKbutton.BackColor = System.Drawing.Color.Salmon;
             this.OKbutton.BackgroundImage = global::SnakeGame.Properties.Resources.Pixel_art_grass_image;
-            this.OKbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OKbutton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.OKbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OKbutton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.OKbutton.Image = global::SnakeGame.Properties.Resources.Pixel_art_grass_image;
             this.OKbutton.Location = new System.Drawing.Point(319, 220);
             this.OKbutton.Name = "OKbutton";
@@ -112,8 +112,8 @@
             // 
             this.exitButton.BackColor = System.Drawing.Color.Salmon;
             this.exitButton.BackgroundImage = global::SnakeGame.Properties.Resources.Pixel_art_grass_image;
-            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exitButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exitButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.exitButton.Image = global::SnakeGame.Properties.Resources.Pixel_art_grass_image;
             this.exitButton.Location = new System.Drawing.Point(429, 220);
             this.exitButton.Name = "exitButton";
