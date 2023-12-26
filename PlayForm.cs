@@ -12,13 +12,13 @@ namespace SnakeGame
 {
     public partial class SnakeGame : Form
     {
-
-        // Liên kết database
-        private string connStr = @"Data Source=DESKTOP-R570AKJ;Initial Catalog=LTTQ_Project;Integrated Security=True;Encrypt=False";
+        
+        private static RankForm rankForm;
+        private static DataForm dataForm;
 
         // Variable for Database
         DateTime pTime;
-        string pID, pName;
+        string pID = "", pName = "";
 
         // Danh sách chứa con rắn
         private List<Circle> Snake = new List<Circle>();
@@ -60,19 +60,6 @@ namespace SnakeGame
         {
             InitializeComponent();
             new Settings();
-            LoadData();
-        }
-
-        /*
-         * Hàm khởi tạo để lấy dữ liệu là thông tin của người chơi từ DataForm
-         */
-        public SnakeGame(string pID, string pName)
-        {
-            InitializeComponent();
-            new Settings();
-            LoadData();
-            this.pID = pID;
-            this.pName = pName;
         }
 
         // Hàm khởi tạo vật cản
@@ -106,35 +93,6 @@ namespace SnakeGame
                 return true;
             }
             return false;
-        }
-        // Lấy data từ CSDL
-        private DataSet getdata()
-        {
-            DataSet dataSet = new DataSet();
-            string query = "SELECT * FROM Player ORDER BY score DESC";
-            using (SqlConnection connection = new SqlConnection(connStr))
-            {
-                connection.Open();
-                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
-
-                adapter.Fill(dataSet);
-
-                connection.Close();
-            }
-            return dataSet;
-
-        }
-        // Load thông tin của database vào
-        private void LoadData()
-        {
-            try
-            {
-                dataGridView1.DataSource = getdata().Tables[0];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi: {ex.Message}");
-            }
         }
 
         // Khi nhấn 1 nút (nút di chuyển hoặc nút pause)
@@ -179,10 +137,41 @@ namespace SnakeGame
                 goDown = false;
         }
 
+        // chấp nhân người chơi có được chơi hay không
+        private int can_startGame = 0;
+
+        // Dataform sẽ gửi dữ liệu khi được đóng
+        private void DataForm_FormClosed( object sender, FormClosedEventArgs e)
+        {
+            DataForm dataForm = sender as DataForm;
+            if (dataForm != null)
+            {
+                this.pID = dataForm.pID;
+                this.pName = dataForm.pName;
+            }
+        }
+
+        // Yêu cầu người chơi nhập DataPlayer trước khi chơi game
+        private void EnterData(object sender, EventArgs e)
+        {
+            dataForm = new DataForm();
+            dataForm.FormClosed += DataForm_FormClosed;
+            dataForm.Show();
+            can_startGame = 1;
+        }
+        
         // Bắt đầu = Restart
         private void StartGame(object sender, EventArgs e)
         {
-            RestartGame();
+            if (can_startGame == 1)
+            {
+                RestartGame();
+                can_startGame = 0;
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng nhập thông tin người chơi!?", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            }
         }
 
         // Chụp hình 
@@ -410,8 +399,9 @@ namespace SnakeGame
             snapButton.Enabled = false;
             easyRadioButton.Enabled = false;
             mediumRadioButton.Enabled = false;
-            hardRadioButton.Enabled = false;
             exitButton.Enabled = false;
+            dataButton.Enabled = false;
+            rankButton.Enabled = false;
 
             score = 0;
             txtScore.Text = "Score: " + score;
@@ -470,17 +460,18 @@ namespace SnakeGame
 
         private void easyRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            gameTimer.Interval = 100;
+            gameTimer.Interval = 80;
         }
 
         private void mediumRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            gameTimer.Interval = 75;
+            gameTimer.Interval = 60;
         }
 
-        private void hardRadioButton_CheckedChanged(object sender, EventArgs e)
+        private void rankButton_Click(object sender, EventArgs e)
         {
-            gameTimer.Interval = 50;
+            rankForm = new RankForm();
+            rankForm.Show();
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -510,9 +501,6 @@ namespace SnakeGame
             return false;
         }
 
-        // Sự kiện xảy ra khi trò chơi kết thúc
-        public event Action GameOverEvent;
-
         // Xử lí khi game kết thúc
         private void GameOver()
         {
@@ -523,8 +511,9 @@ namespace SnakeGame
             snapButton.Enabled = true;
             easyRadioButton.Enabled = true;
             mediumRadioButton.Enabled = true;
-            hardRadioButton.Enabled = true;
             exitButton.Enabled = true;
+            dataButton.Enabled = true;
+            rankButton.Enabled = true;
 
             if (score > highscore)
             {
@@ -533,57 +522,13 @@ namespace SnakeGame
                 txtHighScore.TextAlign = ContentAlignment.MiddleCenter;
             }
 
-            // Thêm dữ liệu người chơi vào trong CSDL
-            string query = @"
-                            if (exists(select 1 from player where id = @id_value))
-                                begin
-                                    declare @HIGHER_score int,
-                                            @PRE_score int,
-                                            @PRESENT_score int
-                                    set @PRESENT_score = @present_score_value
-                                    
-                                    select @PRE_score = score
-                                    from player
-                                    where id = @id_value
+            // hiển thị form chứa thông tin kết quả của người chơi
+            rankForm = new RankForm(pTime, pID, pName, score);
+            rankForm.Show();
 
-                                    if (@PRE_score > @PRESENT_score)
-                                    begin 
-                                        set @HIGHER_score = @PRE_score
-                                    end
-                                    else
-                                    begin
-                                        set @HIGHER_score = @PRESENT_score
-                                    end
+            // xóa instance dataForm
+            dataForm = null;
 
-                                    update player
-                                    set score = @HIGHER_score, time_played = @time_value
-                                    where id = @id_value
-                                end
-                             else
-                                begin
-                                    insert into player(id,player_name,score,time_played) values (@id_value,@name_value,@present_score_value,@time_value)
-                                end
-                            ";
-
-            using (SqlConnection connection = new SqlConnection(connStr))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand(query, connection);
-
-                command.Parameters.AddWithValue("@id_value", pID);
-                command.Parameters.AddWithValue("@name_value", pName);
-                command.Parameters.AddWithValue("@present_score_value", score);
-                command.Parameters.AddWithValue("@time_value", pTime.ToString());
-
-                command.ExecuteNonQuery();
-
-                connection.Close();
-            }
-
-            // Gọi sự kiện khi trò chơi kết thúc
-            GameOverEvent?.Invoke();
-            this.Hide();
         }
-
     }
 }

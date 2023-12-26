@@ -13,7 +13,7 @@ namespace SnakeGame
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainMenuForm()); //SnakeGame này là kiểu Form
+            Application.Run(new SnakeGame()); //SnakeGame này là kiểu Form
         }
     }
 }
