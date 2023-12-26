@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Remoting.Contexts;
@@ -12,7 +13,7 @@ namespace SnakeGame
 {
     public partial class SnakeGame : Form
     {
-        
+
         private static RankForm rankForm;
         private static DataForm dataForm;
 
@@ -55,15 +56,18 @@ namespace SnakeGame
         // biến định hướng di chuyển
         bool goLeft, goRight, goDown, goUp;
 
+        // mode trò chơi
+        bool mode1 = false;
+        bool mode2 = false;
+
         // hàm khởi tạo khi instance được gọi
         public SnakeGame()
         {
             InitializeComponent();
-            new Settings();
         }
 
-        // Hàm khởi tạo vật cản
-        private void InitializeObstacles()
+        // Hàm khởi tạo vật cản ngẫu nhiên
+        private void InitializeRandomObstacles()
         {
             // Create random obstacles 
             for (int i = 0; i < 20; i++)
@@ -78,6 +82,40 @@ namespace SnakeGame
             }
         }
 
+        // Hàm khởi tạo vật cản ngẫu nhiên
+        private void InitializeOuterObstacles()
+        {
+            // x ngang còn y dọc
+            // Create outer obstacles 
+            for (int i = 0; i < 38; i++)
+            {
+                Obstacle newObstacle;
+                newObstacle = new Obstacle(i, 0, 16, 16); // y = 0
+                obstacles.Add(newObstacle);
+            }
+
+            for (int i = 0; i < 38; i++)
+            {
+                Obstacle newObstacle;
+                newObstacle = new Obstacle(i, 31, 16, 16); // y = 31*16
+                obstacles.Add(newObstacle);
+            }
+
+            for (int i = 1; i < 31; i++)
+            {
+                Obstacle newObstacle;
+                newObstacle = new Obstacle(0, i, 16, 16); // x = 0
+                obstacles.Add(newObstacle);
+            }
+
+            for (int i = 1; i < 31; i++)
+            {
+                Obstacle newObstacle;
+                newObstacle = new Obstacle(37, i, 16, 16); // x = 37
+                obstacles.Add(newObstacle);
+            }
+        }
+
         /* 
          * Xem vật cản có gần vị trí bắt đầu lúc start game không
          * (vì nếu gần quá sẽ dẫn đến thua ngay khi vừa vào game)
@@ -88,7 +126,7 @@ namespace SnakeGame
             int distanceX = Math.Abs(SnakeHead.X - obstacle.X);
 
             // Kiểm tra xem vật cản có quá gần đầu rắn hay không
-            if (distanceX < 5)
+            if (distanceX < 4 && SnakeHead.Y == obstacle.Y)
             {
                 return true;
             }
@@ -141,7 +179,7 @@ namespace SnakeGame
         private int can_startGame = 0;
 
         // Dataform sẽ gửi dữ liệu khi được đóng
-        private void DataForm_FormClosed( object sender, FormClosedEventArgs e)
+        private void DataForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             DataForm dataForm = sender as DataForm;
             if (dataForm != null)
@@ -159,7 +197,7 @@ namespace SnakeGame
             dataForm.Show();
             can_startGame = 1;
         }
-        
+
         // Bắt đầu = Restart
         private void StartGame(object sender, EventArgs e)
         {
@@ -384,6 +422,8 @@ namespace SnakeGame
         // Hàm bắt đầu lại trò chơi
         private void RestartGame()
         {
+            new Settings();
+
             // Lấy dữ liệu thời gian chơi
             pTime = DateTime.Now;
 
@@ -397,8 +437,14 @@ namespace SnakeGame
             // khi đó thì không dùng các phim trên bàn phím dc nên phải tắt
             startButton.Enabled = false;
             snapButton.Enabled = false;
+
             easyRadioButton.Enabled = false;
             mediumRadioButton.Enabled = false;
+            hardRadioButton.Enabled = false;
+
+            Mode1CheckBox.Enabled = false;
+            Mode2CheckBox.Enabled = false;
+
             exitButton.Enabled = false;
             dataButton.Enabled = false;
             rankButton.Enabled = false;
@@ -410,8 +456,12 @@ namespace SnakeGame
             Circle head = new Circle { X = 10, Y = 5 };
             Snake.Add(head);
 
-            // Khởi tạo vật cản
-            InitializeObstacles();
+            // Khởi tạo vật cản 
+            if (mode1)
+                InitializeRandomObstacles();
+
+            if (mode2)
+                InitializeOuterObstacles();
 
             // Create and add the body part of the snake to the list
             for (int i = 0; i < 10; i++)
@@ -468,10 +518,38 @@ namespace SnakeGame
             gameTimer.Interval = 60;
         }
 
+        private void hardRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            gameTimer.Interval = 40;
+        }
         private void rankButton_Click(object sender, EventArgs e)
         {
             rankForm = new RankForm();
             rankForm.Show();
+        }
+
+        private void Mode1CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Mode1CheckBox.Checked)
+            {
+                mode1 = true;
+            }
+            else
+            {
+                mode1 = false;
+            }
+        }
+
+        private void Mode2CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Mode2CheckBox.Checked)
+            {
+                mode2 = true;
+            }
+            else
+            {
+                mode2 = false;
+            }
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -493,11 +571,13 @@ namespace SnakeGame
         // Kiểm tra xem food có đang ở trên vật cản hay không, nếu có thì không thể được
         bool FoodOnObstacle()
         {
-            for (int i = 0; i < 20; i++)
-            {
-                if (food.X == obstacles[i].X && food.Y == obstacles[i].Y)
-                    return true;
-            }
+            if (mode1 || mode2)
+                for (int i = 0; i < obstacles.Count; i++)
+                {
+                    if (food.X == obstacles[i].X && food.Y == obstacles[i].Y)
+                        return true;
+                }
+
             return false;
         }
 
@@ -506,21 +586,20 @@ namespace SnakeGame
         {
             gameTimer.Stop();
 
-            // Cho phép nút Start và Chụp
+            // Cho phép các button được bấm
             startButton.Enabled = true;
             snapButton.Enabled = true;
+
             easyRadioButton.Enabled = true;
             mediumRadioButton.Enabled = true;
+            hardRadioButton.Enabled = true;
+
+            Mode1CheckBox.Enabled = true;
+            Mode2CheckBox.Enabled = true;
+
             exitButton.Enabled = true;
             dataButton.Enabled = true;
             rankButton.Enabled = true;
-
-            if (score > highscore)
-            {
-                highscore = score;
-                txtHighScore.Text = "Highest Score of Game: " + Environment.NewLine + highscore;
-                txtHighScore.TextAlign = ContentAlignment.MiddleCenter;
-            }
 
             // hiển thị form chứa thông tin kết quả của người chơi
             rankForm = new RankForm(pTime, pID, pName, score);

@@ -15,7 +15,7 @@ namespace SnakeGame
     public partial class RankForm : Form
     {
         // Liên kết database
-        private string connStr = @"Data Source=DESKTOP-R570AKJ;Initial Catalog=LTTQ_Project;Integrated Security=True;Encrypt=False";
+        private string connStr = @"Data Source=DESKTOP-B7G8SLV;Initial Catalog=LTTQ_Project;Integrated Security=True;Encrypt=False";
 
         // biến cho DataBase
         DateTime pTime;
@@ -28,7 +28,7 @@ namespace SnakeGame
             LoadData();
         }
 
-        public RankForm(DateTime pTime, string pID, string pName,  int score)
+        public RankForm(DateTime pTime, string pID, string pName, int score)
         {
             InitializeComponent();
             this.pTime = pTime;
