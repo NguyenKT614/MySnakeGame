@@ -36,7 +36,6 @@ namespace SnakeGame
 
         // Điểm số của người chơi
         int score;
-        int highscore;
 
         /* 
          * Thời gian để tạo lại thức ăn
@@ -216,7 +215,7 @@ namespace SnakeGame
         private void TakeSnapShot(object sender, EventArgs e)
         {
             Label caption = new Label();
-            caption.Text = "I scored: " + score + " and my Highscore is " + highscore;
+            caption.Text = "I scored: " + score;
             caption.ForeColor = Color.White;
             caption.Font = new Font("Arial", 12, FontStyle.Bold);
             caption.AutoSize = false;
@@ -515,12 +514,12 @@ namespace SnakeGame
 
         private void mediumRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            gameTimer.Interval = 60;
+            gameTimer.Interval = 70;
         }
 
         private void hardRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            gameTimer.Interval = 40;
+            gameTimer.Interval = 60;
         }
         private void rankButton_Click(object sender, EventArgs e)
         {
