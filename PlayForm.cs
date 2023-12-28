@@ -8,12 +8,13 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Remoting.Contexts;
 using System.Windows.Forms;
+using NAudio;
+using NAudio.Wave;
 
 namespace SnakeGame
 {
     public partial class SnakeGame : Form
     {
-
         private static RankForm rankForm;
         private static DataForm dataForm;
 
@@ -63,11 +64,44 @@ namespace SnakeGame
         bool mode1 = false;
         bool mode2 = false;
 
+        // mode âm thanh
+        bool music = true;
+        bool sfx = true;
+
+
+        private WaveOutEvent backgroundMusicPlayer;
+        private WaveOutEvent eatSoundPlayer;
+        private WaveOutEvent gameOverSoundPlayer;
+
+        private AudioFileReader backgroundMusicReader;
+        private AudioFileReader eatSoundReader;
+        private AudioFileReader gameOverSoundReader;
+
+        private string backgroundMusicPath = "C:/Users/NC/Downloads/conan.wav";
+        private string eatSoundPath = "C:/Users/NC/Downloads/Eat_Sound.wav";
+        private string gameOverSoundPath = "C:/Users/NC/Downloads/Game_Over_Sound.wav";
+
         // hàm khởi tạo khi instance được gọi
         public SnakeGame()
         {
             InitializeComponent();
+
+            // Khởi tạo player cho nhạc nền
+            backgroundMusicPlayer = new WaveOutEvent();
+            backgroundMusicReader = new AudioFileReader(backgroundMusicPath);
+            backgroundMusicPlayer.Init(backgroundMusicReader);
+            // Tùy chỉnh âm lượng của âm thanh (0->1)
+            backgroundMusicReader.Volume = 0.5f;
+
+            // Khởi tạo player cho tiếng động khi con rắn ăn mồi
+            eatSoundPlayer = new WaveOutEvent();
+            eatSoundReader = new AudioFileReader(eatSoundPath);
+
+            // Khởi tạo player cho âm thanh khi game over
+            gameOverSoundPlayer = new WaveOutEvent();
+            gameOverSoundReader = new AudioFileReader(gameOverSoundPath);
         }
+
 
         // Hàm khởi tạo vật cản ngẫu nhiên
         private void InitializeRandomObstacles()
@@ -426,6 +460,12 @@ namespace SnakeGame
         // Hàm bắt đầu lại trò chơi
         private void RestartGame()
         {
+            // Bắt đầu phát nhạc nền
+            if (music)
+            {
+                backgroundMusicPlayer.Play();
+            }
+
             new Settings();
 
             // Lấy dữ liệu thời gian chơi
@@ -448,6 +488,9 @@ namespace SnakeGame
 
             Mode1CheckBox.Enabled = false;
             Mode2CheckBox.Enabled = false;
+
+            musicCheckBox.Enabled = false;
+            SFXCheckBox.Enabled = false;
 
             exitButton.Enabled = false;
             dataButton.Enabled = false;
@@ -492,6 +535,14 @@ namespace SnakeGame
         // Khi rắn đụng vào thức ăn
         private void EatFood()
         {
+            // Phát tiếng động khi con rắn ăn mồi
+            if (sfx)
+            {
+                eatSoundPlayer.Stop(); // Dừng player nếu đang phát
+                eatSoundPlayer.Init(new AudioFileReader(eatSoundPath)); // Khởi tạo lại để chuẩn bị phát
+                eatSoundPlayer.Play(); // Bắt đầu phát
+            }
+
             // Tăng điểm lên 1
             score += 1;
             txtScore.Text = "Score: " + score;
@@ -559,6 +610,30 @@ namespace SnakeGame
             }
         }
 
+        private void musicCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (musicCheckBox.Checked)
+            {
+                music = true;
+            }
+            else
+            {
+                music = false;
+            }
+        }
+
+        private void SFXCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (SFXCheckBox.Checked)
+            {
+                sfx = true;
+            }
+            else
+            {
+                sfx = false;
+            }
+        }
+
         private void exitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -593,6 +668,17 @@ namespace SnakeGame
         // Xử lí khi game kết thúc
         private void GameOver()
         {
+            // Dừng nhạc nền
+            backgroundMusicPlayer.Stop();
+
+            if (sfx)
+            {
+                // Phát âm thanh khi game over
+                gameOverSoundPlayer.Stop();
+                gameOverSoundPlayer.Init(new AudioFileReader(gameOverSoundPath));
+                gameOverSoundPlayer.Play();
+            }
+
             gameTimer.Stop();
 
             // Cho phép các button được bấm
@@ -605,6 +691,9 @@ namespace SnakeGame
 
             Mode1CheckBox.Enabled = true;
             Mode2CheckBox.Enabled = true;
+
+            musicCheckBox.Enabled = true;
+            SFXCheckBox.Enabled = true;
 
             exitButton.Enabled = true;
             dataButton.Enabled = true;
