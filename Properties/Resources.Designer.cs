@@ -71,6 +71,15 @@ namespace SnakeGame.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Background_Sound {
+            get {
+                return ResourceManager.GetStream("Background_Sound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap dauran {
@@ -87,6 +96,24 @@ namespace SnakeGame.Properties {
             get {
                 object obj = ResourceManager.GetObject("duoiran", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Eat_Sound {
+            get {
+                return ResourceManager.GetStream("Eat_Sound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Game_Over_Sound {
+            get {
+                return ResourceManager.GetStream("Game_Over_Sound", resourceCulture);
             }
         }
         

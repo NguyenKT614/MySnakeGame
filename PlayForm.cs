@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Runtime.Remoting.Contexts;
 using System.Windows.Forms;
 using NAudio;
@@ -68,7 +69,6 @@ namespace SnakeGame
         bool music = true;
         bool sfx = true;
 
-
         private WaveOutEvent backgroundMusicPlayer;
         private WaveOutEvent eatSoundPlayer;
         private WaveOutEvent gameOverSoundPlayer;
@@ -77,29 +77,28 @@ namespace SnakeGame
         private AudioFileReader eatSoundReader;
         private AudioFileReader gameOverSoundReader;
 
-        private string backgroundMusicPath = "C:/Users/NC/Downloads/conan.wav";
-        private string eatSoundPath = "C:/Users/NC/Downloads/Eat_Sound.wav";
-        private string gameOverSoundPath = "C:/Users/NC/Downloads/Game_Over_Sound.wav";
+        public static string SoundFile1 = "C:/Users/NC/Desktop/Nhat_2/SnakeGame/Resources/Background_Sound.wav";
+        public static string SoundFile2 = "C:/Users/NC/Desktop/Nhat_2/SnakeGame/Resources/Eat_Sound.wav";
+        public static string SoundFile3 = "C:/Users/NC/Desktop/Nhat_2/SnakeGame/Resources/Game_Over_Sound.wav";
 
         // hàm khởi tạo khi instance được gọi
         public SnakeGame()
         {
             InitializeComponent();
-
             // Khởi tạo player cho nhạc nền
             backgroundMusicPlayer = new WaveOutEvent();
-            backgroundMusicReader = new AudioFileReader(backgroundMusicPath);
+            backgroundMusicReader = new AudioFileReader(SoundFile1);
             backgroundMusicPlayer.Init(backgroundMusicReader);
             // Tùy chỉnh âm lượng của âm thanh (0->1)
             backgroundMusicReader.Volume = 0.5f;
 
             // Khởi tạo player cho tiếng động khi con rắn ăn mồi
             eatSoundPlayer = new WaveOutEvent();
-            eatSoundReader = new AudioFileReader(eatSoundPath);
+            eatSoundReader = new AudioFileReader(SoundFile2);
 
             // Khởi tạo player cho âm thanh khi game over
             gameOverSoundPlayer = new WaveOutEvent();
-            gameOverSoundReader = new AudioFileReader(gameOverSoundPath);
+            gameOverSoundReader = new AudioFileReader(SoundFile3);
         }
 
 
@@ -539,7 +538,7 @@ namespace SnakeGame
             if (sfx)
             {
                 eatSoundPlayer.Stop(); // Dừng player nếu đang phát
-                eatSoundPlayer.Init(new AudioFileReader(eatSoundPath)); // Khởi tạo lại để chuẩn bị phát
+                eatSoundPlayer.Init(new AudioFileReader(SoundFile2)); // Khởi tạo lại để chuẩn bị phát
                 eatSoundPlayer.Play(); // Bắt đầu phát
             }
 
@@ -675,7 +674,7 @@ namespace SnakeGame
             {
                 // Phát âm thanh khi game over
                 gameOverSoundPlayer.Stop();
-                gameOverSoundPlayer.Init(new AudioFileReader(gameOverSoundPath));
+                gameOverSoundPlayer.Init(new AudioFileReader(SoundFile3));
                 gameOverSoundPlayer.Play();
             }
 
